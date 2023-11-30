@@ -1,4 +1,3 @@
-import css from 'dom-css';
 let scrollbarWidth = false;
 
 export default function getScrollbarWidth(cacheEnabled = true) {
@@ -6,14 +5,14 @@ export default function getScrollbarWidth(cacheEnabled = true) {
     /* istanbul ignore else */
     if (typeof document !== 'undefined') {
         const div = document.createElement('div');
-        css(div, {
-            width: 100,
-            height: 100,
+        div.style = {
+            width: '100px',
+            height: '100px',
             position: 'absolute',
-            top: -9999,
+            top: '-9999px',
             overflow: 'scroll',
-            MsOverflowStyle: 'scrollbar'
-        });
+        };
+
         document.body.appendChild(div);
         scrollbarWidth = (div.offsetWidth - div.clientWidth);
         document.body.removeChild(div);

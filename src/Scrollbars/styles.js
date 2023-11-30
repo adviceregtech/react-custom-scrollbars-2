@@ -56,11 +56,3 @@ export const thumbVerticalStyleDefault = {
     display: 'block',
     width: '100%'
 };
-
-export const disableSelectStyle = {
-    userSelect: 'none'
-};
-
-export const disableSelectStyleReset = {
-    userSelect: ''
-};

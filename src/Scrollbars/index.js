@@ -1,5 +1,4 @@
 import raf, { cancel as caf } from 'raf';
-import css from 'dom-css';
 import { Component, createElement, cloneElement } from 'react';
 
 import isString from '../utils/isString';
@@ -18,8 +17,6 @@ import {
     trackVerticalStyleDefault,
     thumbHorizontalStyleDefault,
     thumbVerticalStyleDefault,
-    disableSelectStyle,
-    disableSelectStyleReset
 } from './styles';
 
 import {
@@ -323,14 +320,14 @@ export default class Scrollbars extends Component {
     }
 
     setupDragging() {
-        css(document.body, disableSelectStyle);
+        document.body.style.userSelect = 'none';
         document.addEventListener('mousemove', this.handleDrag);
         document.addEventListener('mouseup', this.handleDragEnd);
         document.onselectstart = returnFalse;
     }
 
     teardownDragging() {
-        css(document.body, disableSelectStyleReset);
+        document.body.style.userSelect = '';
         document.removeEventListener('mousemove', this.handleDrag);
         document.removeEventListener('mouseup', this.handleDragEnd);
         document.onselectstart = undefined;
@@ -399,8 +396,8 @@ export default class Scrollbars extends Component {
 
     showTracks() {
         clearTimeout(this.hideTracksTimeout);
-        css(this.trackHorizontal, { opacity: 1 });
-        css(this.trackVertical, { opacity: 1 });
+        this.trackHorizontal.style.opacity = 1;
+        this.trackVertical.style.opacity = 1;
     }
 
     hideTracks() {
@@ -410,8 +407,8 @@ export default class Scrollbars extends Component {
         const { autoHideTimeout } = this.props;
         clearTimeout(this.hideTracksTimeout);
         this.hideTracksTimeout = setTimeout(() => {
-            css(this.trackHorizontal, { opacity: 0 });
-            css(this.trackVertical, { opacity: 0 });
+            this.trackHorizontal.style.opacity = 0;
+            this.trackVertical.style.opacity = 0;
         }, autoHideTimeout);
     }
 
@@ -451,30 +448,20 @@ export default class Scrollbars extends Component {
             const trackHorizontalWidth = getInnerWidth(this.trackHorizontal);
             const thumbHorizontalWidth = this.getThumbHorizontalWidth();
             const thumbHorizontalX = scrollLeft / (scrollWidth - clientWidth) * (trackHorizontalWidth - thumbHorizontalWidth);
-            const thumbHorizontalStyle = {
-                width: thumbHorizontalWidth,
-                transform: `translateX(${thumbHorizontalX}px)`
-            };
+
             const { scrollTop, clientHeight, scrollHeight } = values;
             const trackVerticalHeight = getInnerHeight(this.trackVertical);
             const thumbVerticalHeight = this.getThumbVerticalHeight();
             const thumbVerticalY = scrollTop / (scrollHeight - clientHeight) * (trackVerticalHeight - thumbVerticalHeight);
-            const thumbVerticalStyle = {
-                height: thumbVerticalHeight,
-                transform: `translateY(${thumbVerticalY}px)`
-            };
             if (hideTracksWhenNotNeeded) {
-                const trackHorizontalStyle = {
-                    visibility: scrollWidth > clientWidth ? 'visible' : 'hidden'
-                };
-                const trackVerticalStyle = {
-                    visibility: scrollHeight > clientHeight ? 'visible' : 'hidden'
-                };
-                css(this.trackHorizontal, trackHorizontalStyle);
-                css(this.trackVertical, trackVerticalStyle);
+                this.trackHorizontal.style.visibility = scrollWidth > clientWidth ? 'visible' : 'hidden';
+                this.trackVertical.style.visibility = scrollHeight > clientHeight ? 'visible' : 'hidden';
             }
-            css(this.thumbHorizontal, thumbHorizontalStyle);
-            css(this.thumbVertical, thumbVerticalStyle);
+
+            this.thumbHorizontal.style.width = `${thumbHorizontalWidth}px`;
+            this.thumbHorizontal.style.transform = `translateX(${thumbHorizontalX}px)`;
+            this.thumbVertical.style.height = `${thumbVerticalHeight}px`;
+            this.thumbVertical.style.transform = `translateY(${thumbVerticalY}px)`;
         }
         if (onUpdate) onUpdate(values);
         if (typeof callback !== 'function') return;
