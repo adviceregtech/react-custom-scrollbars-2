@@ -1,6 +1,8 @@
 react-custom-scrollbars-2
 =========================
 
+SAMI fork of https://github.com/RobPethick/react-custom-scrollbars-2 with fixed container scrolling and removed vendors.
+
 [![npm](https://img.shields.io/badge/npm-react--custom--scrollbars--2-brightgreen.svg?style=flat-square)]()
 [![npm version](https://img.shields.io/npm/v/react-custom-scrollbars-2.svg?style=flat-square)](https://www.npmjs.com/package/react-custom-scrollbars-2)
 [![npm downloads](https://img.shields.io/npm/dm/react-custom-scrollbars-2.svg?style=flat-square)](https://www.npmjs.com/package/react-custom-scrollbars-2)
