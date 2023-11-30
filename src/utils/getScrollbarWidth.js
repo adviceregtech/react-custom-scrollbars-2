@@ -5,13 +5,11 @@ export default function getScrollbarWidth(cacheEnabled = true) {
     /* istanbul ignore else */
     if (typeof document !== 'undefined') {
         const div = document.createElement('div');
-        div.style = {
-            width: '100px',
-            height: '100px',
-            position: 'absolute',
-            top: '-9999px',
-            overflow: 'scroll',
-        };
+        div.style.width = '100px';
+        div.style.height = '100px';
+        div.style.position = 'absolute';
+        div.style.top = '-9999px';
+        div.style.overflow = 'scroll';
 
         document.body.appendChild(div);
         scrollbarWidth = (div.offsetWidth - div.clientWidth);
