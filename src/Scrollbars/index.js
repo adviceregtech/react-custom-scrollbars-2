@@ -482,6 +482,17 @@ export default class Scrollbars extends Component {
         callback(values);
     }
 
+    fixContainerScroll = () => {
+        if (this.container) {
+            if (this.container.scrollTop > 0) {
+                this.container.scrollTop = 0;
+            }
+            if (this.container.scrollLeft > 0) {
+                this.container.scrollLeft = 0;
+            }
+        }
+    }
+
     render() {
         const scrollbarWidth = getScrollbarWidth();
         /* eslint-disable no-unused-vars */
@@ -570,7 +581,7 @@ export default class Scrollbars extends Component {
             })
         };
 
-        return createElement(tagName, { ...props, style: containerStyle, ref: (ref) => { this.container = ref; } }, [
+        return createElement(tagName, { ...props, onScroll: this.fixContainerScroll, style: containerStyle, ref: (ref) => { this.container = ref; } }, [
             cloneElement(
                 renderView({ style: viewStyle }),
                 { key: 'view', ref: (ref) => { this.view = ref; } },
